@@ -126,9 +126,9 @@
   <ItemGroup>
     <ClCompile Include="..\SharedCode\message.cpp" />
     <ClCompile Include="auth.cpp" />
-    <ClCompile Include="connection_session.cpp" />
-    <ClCompile Include="sv_main.cpp" />
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="sv_main.cpp" />
+    <ClCompile Include="client_handler.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
