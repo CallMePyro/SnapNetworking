@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="connection_session.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cl_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\SharedCode\message.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="connection_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="connection_session.h">
+    <ClInclude Include="..\SharedCode\message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\SharedCode\message.h">
+    <ClInclude Include="connection_session.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "connection_session.h"
+#include "client.h"
 #include "auth.h"
 #include <boost/asio.hpp>
 using boost::asio::ip::address;

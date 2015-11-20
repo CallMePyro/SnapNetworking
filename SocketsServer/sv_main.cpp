@@ -1,5 +1,5 @@
 #include <boost/asio.hpp>
-#include "connection_session.h"
+#include "client.h"
 #include "server.h"
 
 #include <iostream>

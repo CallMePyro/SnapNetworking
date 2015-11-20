@@ -128,13 +128,13 @@
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="connection_session.cpp" />
     <ClCompile Include="sv_main.cpp" />
-    <ClCompile Include="client_handler.cpp" />
+    <ClCompile Include="client.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SharedCode\message.h" />
     <ClInclude Include="auth.h" />
-    <ClInclude Include="connection_session.h" />
+    <ClInclude Include="client.h" />
     <ClInclude Include="client_handler.h" />
     <ClInclude Include="participant.h" />
     <ClInclude Include="server.h" />
