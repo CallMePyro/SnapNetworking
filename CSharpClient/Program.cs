@@ -28,13 +28,13 @@ public class SynchronousSocketClient
                     sender.RemoteEndPoint.ToString() );
 
                 // Encode the data string into a byte array.
-                byte[] msg = Encoding.ASCII.GetBytes( "c#_client asmuth" );
+                byte[] msg = Encoding.ASCII.GetBytes( "jacob asmuth" );
                 // Send the data through the socket.
                 int bytesSent = sender.Send( msg );
 
                 Thread.Sleep( 1000 );
 
-                msg = Encoding.ASCII.GetBytes( "  14   1Hello from C#jacob!" );
+                msg = Encoding.ASCII.GetBytes( "  13   1Hello from C#jacob!" );
                 sender.Send( msg );
 
                 // Release the socket.

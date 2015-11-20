@@ -10,13 +10,10 @@ void connection_session::deliver( const message & msg )
 {
 	if( msg.get_id() != _id )
 	{
-		bool write_in_progress = !_msg_queue.empty();
+		bool empty = _msg_queue.empty();
 		_msg_queue.push_back( msg );
-		if( !write_in_progress ) //if it was empty before we added our message to the queue then process the message. 
-		//otherwise the current message in queue will process the next one
-		{
+		if( empty ) //Otherwise the preceeding message in the queue will process this one.
 			write();
-		}
 	}
 }
 
@@ -25,13 +22,9 @@ void connection_session::read_header()
 	async_read( _socket, buffer( _cur_msg.data(), message::header_length ), [this]( error_code ec, size_t len )
 	{
 		if( !ec && _cur_msg.decode_header() )
-		{
 			read_id();
-		}
 		else
-		{
 			_connected_clients.leave( shared_from_this() );
-		}
 	} );
 }
 
@@ -101,9 +94,7 @@ void connection_session::write()
 		{
 			_msg_queue.pop_front();
 			if( !_msg_queue.empty() )
-			{
 				write();
-			}
 		}
 		else
 		{

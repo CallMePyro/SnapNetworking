@@ -1,14 +1,10 @@
 #pragma once
 
-#include <cstdio>
-using std::sprintf;
-#include <cstdlib>
-using std::atoi;
-using std::size_t;
 #include <cstring>
 using std::strncat;
 #include <string>
 using std::string;
+using std::size_t;
 
 class message
 {
@@ -27,7 +23,6 @@ public:
 	char * username();
 
 	size_t total_length() const;
-
 	size_t body_length() const;
 	void body_length( size_t new_length );
 

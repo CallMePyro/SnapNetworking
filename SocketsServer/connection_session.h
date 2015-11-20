@@ -23,14 +23,13 @@ using std::set;
 class connection_session: public participant, public std::enable_shared_from_this<connection_session>
 {
 public:
-	//not gunna bother putting only the initialization list in a seperate file. this is clearer anyways
+	//Not gunna bother putting only the initialization list in the cpp
 	connection_session( tcp::socket socket, client_handler & room, int id, string user ): _socket( std::move( socket ) ), _connected_clients( room ), _id(id), _username(user) {}
 
 	void start();
 	void deliver( const message & msg ) override;
 
 private:
-
 	void read_header();
 	void read_id();
 	void read_body();
