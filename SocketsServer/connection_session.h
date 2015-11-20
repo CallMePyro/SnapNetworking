@@ -24,7 +24,7 @@ class connection_session: public participant, public std::enable_shared_from_thi
 {
 public:
 	//not gunna bother putting only the initialization list in a seperate file. this is clearer anyways
-	connection_session( tcp::socket socket, client_handler & room, int id ): _socket( std::move( socket ) ), _connected_clients( room ), _id(id) {}
+	connection_session( tcp::socket socket, client_handler & room, int id, string user ): _socket( std::move( socket ) ), _connected_clients( room ), _id(id), _username(user) {}
 
 	void start();
 	void deliver( const message & msg ) override;
@@ -43,4 +43,5 @@ private:
 	message _cur_msg;
 	deque<message> _msg_queue;
 	int _id;
+	string _username;
 };

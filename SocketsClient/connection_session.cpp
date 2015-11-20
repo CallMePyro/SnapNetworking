@@ -81,7 +81,7 @@ void connection_session::write()
 {
 	_msg_queue.front().encode_id( _id ); //always attach our uniqueID to the message
 	_msg_queue.front().encode_username( _username ); //always attach our undername to the end of the message
-	async_write( _socket, buffer( _msg_queue.front().data(), _msg_queue.front().total_length( true ) ), [this]( error_code ec, size_t len )
+	async_write( _socket, buffer( _msg_queue.front().data(), _msg_queue.front().total_length() ), [this]( error_code ec, size_t len )
 	{
 		if( !ec )
 		{

@@ -33,7 +33,7 @@ public:
 	const char* body() const;
 	char* body();
 
-	size_t total_length( bool username_attached ) const;
+	size_t total_length() const;
 
 	size_t body_length() const;
 	void body_length( size_t new_length );

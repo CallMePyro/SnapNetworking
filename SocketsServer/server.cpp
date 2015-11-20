@@ -21,9 +21,10 @@ void server::accept()
 			if( auth::valid_login( user, pass ) )
 			{
 				send_id(); //when a client connects initially, send them their ID
-				std::make_shared<connection_session>( std::move( _socket ), _room, cur_id - 1 )->start(); //set the socket in an asynchronous waiting state
 
-				cout << user << " (id: " << cur_id - 1 << ") has connected to the server\n";
+				std::make_shared<connection_session>( std::move( _socket ), _room, cur_id, user )->start(); //set the socket in an asynchronous waiting state
+				cout << user << " (id: " << cur_id << ") has connected to the server\n";
+				cur_id++;
 			}
 			else
 				send_fail_auth();
@@ -35,13 +36,16 @@ void server::accept()
 
 void server::send_id()
 {
-	message id_message( "valid_login" );
-	id_message.encode_id( cur_id++ );
+	message msg( "valid_login" );
+	msg.encode_id( cur_id );
 
-	_socket.write_some( buffer( id_message.data(), id_message.total_length( false ) ) );
+	_socket.write_some( buffer( msg.data(), msg.total_length() ) );
 }
 
 void server::send_fail_auth()
 {
+	message msg( "invalid_login" );
+	msg.encode_id( -1 );
 
+	_socket.write_some( buffer( msg.data(), msg.total_length() ) );
 }

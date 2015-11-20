@@ -85,17 +85,20 @@ void connection_session::read_username()
 
 void connection_session::parse_message()
 {
-	string body( _cur_msg.body(), _cur_msg.body_length() );
-
-	if( body != "" )
+	//if( _cur_msg.get_id() == _id && _cur_msg.get_username() == _username ) //wow real secure jacob
 	{
-		cout << _cur_msg.get_username() << ": " << body << '\n';
+		string body( _cur_msg.body(), _cur_msg.body_length() );
+
+		if( body != "" )
+		{
+			cout << _cur_msg.get_username() << ": " << body << '\n';
+		}
 	}
 }
 
 void connection_session::write()
 {
-	async_write( _socket, buffer( _msg_queue.front().data(), _msg_queue.front().total_length( false ) ), [this]( error_code ec, size_t length )
+	async_write( _socket, buffer( _msg_queue.front().data(), _msg_queue.front().total_length() ), [this]( error_code ec, size_t length )
 	{
 		if( !ec )
 		{
