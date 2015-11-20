@@ -39,8 +39,9 @@ void connection_session::read_id()
 {
 	async_read( _socket, buffer( _cur_msg.id(), message::id_length ), [this]( error_code ec, size_t len )
 	{
-		if( !ec && _cur_msg.decode_id() )
+		if( !ec )
 		{
+			_cur_msg.decode_id();
 			read_body();
 		}
 		else
@@ -55,13 +56,9 @@ void connection_session::read_body()
 	async_read( _socket, buffer( _cur_msg.body(), _cur_msg.body_length() ), [this]( error_code ec, size_t len )
 	{
 		if( !ec )
-		{
 			read_username();
-		}
 		else
-		{
 			_connected_clients.leave( shared_from_this() );
-		}
 	} );
 }
 
@@ -69,10 +66,9 @@ void connection_session::read_username()
 {
 	async_read( _socket, buffer( _cur_msg.username(), message::username_length ), [this]( error_code ec, size_t len )
 	{
-		if( !ec && _cur_msg.decode_username() )
+		if( !ec )
 		{
-			_connected_clients.deliver( _cur_msg );
-
+			_cur_msg.decode_username();
 			parse_message();
 			read_header();
 		}
@@ -85,12 +81,13 @@ void connection_session::read_username()
 
 void connection_session::parse_message()
 {
-	//if( _cur_msg.get_id() == _id && _cur_msg.get_username() == _username ) //wow real secure jacob
+	if( _cur_msg.get_id() == _id && _cur_msg.get_username() == _username ) //wow real secure jacob
 	{
 		string body( _cur_msg.body(), _cur_msg.body_length() );
 
 		if( body != "" )
 		{
+			_connected_clients.deliver( _cur_msg );
 			cout << _cur_msg.get_username() << ": " << body << '\n';
 		}
 	}

@@ -52,10 +52,15 @@ void connection_session::read_id()
 {
 	async_read( _socket, buffer( _cur_msg.id(), message::id_length ), [this]( error_code ec, size_t len )
 	{
-		if( !ec && _cur_msg.decode_id() )
+		if( !ec )
+		{
+			_cur_msg.decode_id();
 			read_body();
+		}
 		else
+		{
 			_socket.close();
+		}
 	} );
 }
 

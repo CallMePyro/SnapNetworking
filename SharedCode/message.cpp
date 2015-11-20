@@ -7,19 +7,9 @@ message::message( const char * buf )
 	write( buf );
 }
 
-const char * message::data() const
-{
-	return _data;
-}
-
 char * message::data()
 {
 	return _data;
-}
-
-const char * message::id() const
-{
-	return _data + header_length;
 }
 
 char * message::id()
@@ -27,24 +17,14 @@ char * message::id()
 	return _data + header_length;
 }
 
-const char * message::username() const
+char* message::body()
 {
-	return _data + header_length + id_length + _body_length;
+	return _data + header_length + id_length;
 }
 
 char * message::username()
 {
 	return _data + header_length + id_length + _body_length;
-}
-
-const char* message::body() const
-{
-	return _data + header_length + id_length;
-}
-
-char* message::body()
-{
-	return _data + header_length + id_length;
 }
 
 size_t message::total_length() const
@@ -78,7 +58,7 @@ void message::write( const char * buf )
 bool message::decode_header()
 {
 	_body_length = *(int *)_data;
-	return true;
+	return _body_length >= 0;
 }
 
 //I know this looks like hell. Basically just write 8 bits at a time to the buffer
@@ -90,10 +70,9 @@ void message::encode_header()
 	_data[0] = _body_length & 0xFF ;
 }
 
-bool message::decode_id()
+void message::decode_id()
 {
 	_id = *(int*)id();
-	return true;
 }
 
 void message::encode_id( int id )
@@ -104,15 +83,12 @@ void message::encode_id( int id )
 	this->id()[0] = id & 0xFF;
 }
 
-bool message::decode_username()
+void message::decode_username()
 {
 	char buf[message::username_length] = { '\0' };
 	for( unsigned i = 0; i < int( message::username_length ); ++i )
-	{
 		buf[i] = username()[i];
-	}
 	_username = buf;
-	return true;
 }
 
 void message::encode_username( string username )

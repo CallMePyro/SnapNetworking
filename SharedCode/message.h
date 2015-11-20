@@ -21,17 +21,10 @@ public:
 	message();
 	message( const char * buf );
 
-	const char* data() const;
-	char* data();
-
-	const char * id() const;
+	char * data();
 	char * id();
-
-	const char * username() const;
+	char * body();
 	char * username();
-
-	const char* body() const;
-	char* body();
 
 	size_t total_length() const;
 
@@ -43,10 +36,10 @@ public:
 	bool decode_header();
 	void encode_header();
 
-	bool decode_id();
+	void decode_id();
 	void encode_id( int id );
 
-	bool decode_username();
+	void decode_username();
 	void encode_username( string username );
 
 	int get_id() const;
