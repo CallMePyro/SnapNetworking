@@ -48,8 +48,7 @@ void message::body_length( size_t new_length )
 
 void message::write( const char * buf )
 {
-	size_t len = strlen( buf );
-	body_length( len );
+	body_length( strlen( buf ) );
 	memcpy( body(), buf, _body_length );
 	encode_header();
 }
