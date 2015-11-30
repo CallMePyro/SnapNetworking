@@ -18,9 +18,9 @@ namespace CSharpClient
             _body_length = 0;
         }
 
-        public message( string buf )
+        public message(string buf)
         {
-            write( buf );
+            write(buf);
         }
 
         public byte[] data()
@@ -38,62 +38,80 @@ namespace CSharpClient
             return header_length + id_length;
         }
 
-        public void body_length( int len )
+        public int username_offset()
+        {
+            return header_length + id_length + _body_length;
+        }
+
+        public void body_length(int len)
         {
             _body_length = len > max_body_length ? max_body_length : len;
         }
 
-        public int total_length( bool username_attached )
+        public int total_length(bool username_attached)
         {
-            if( username_attached )
+            if (username_attached)
                 return header_length + id_length + _body_length + username_length;
             else
                 return header_length + id_length + _body_length;
         }
 
-        public void write( string buf )
+        public void write(string buf)
         {
-            body_length( buf.Length );
-            for( int i = 0; i < _body_length && i < buf.Length; ++i )
-                _data[body_offset() + i] = Convert.ToByte( ( buf[i] ) );
+            body_length(buf.Length);
+            for (int i = 0; i < _body_length && i < buf.Length; ++i)
+                _data[body_offset() + i] = Convert.ToByte((buf[i]));
             encode_header();
         }
 
         public bool decode_header()
         {
+            _body_length = BitConverter.ToInt32(_data, 0);
             return true;
         }
 
         public void encode_header()
         {
-            byte[] bytes = new byte[4];
             unchecked //IIIIIIIIIII'M A BAAAAD PERSOOOOOONNN
             {
-                bytes[0] = (byte)( _body_length >> 24 );
-                bytes[1] = (byte)( _body_length >> 16 );
-                bytes[2] = (byte)( _body_length >> 8 );
-                bytes[3] = (byte)( _body_length );
+                _data[0] = (byte)(_body_length >> 24);
+                _data[1] = (byte)(_body_length >> 16);
+                _data[2] = (byte)(_body_length >> 8);
+                _data[3] = (byte)(_body_length);
             }
         }
 
         public bool decode_id()
         {
+            _id = BitConverter.ToInt32(_data, id_offset());
+
             return true;
         }
 
-        public void encode_id( int id )
+        public void encode_id(int id)
         {
-
+            unchecked //IIIIIIIIIII'M A BAAAAD PERSOOOOOONNN
+            {
+                _data[0 + id_offset()] = (byte)(id >> 24);
+                _data[1 + id_offset()] = (byte)(id >> 16);
+                _data[2 + id_offset()] = (byte)(id >> 8);
+                _data[3 + id_offset()] = (byte)(id);
+            }
         }
 
         public bool decode_username()
         {
+            byte[] temp = new byte[username_length];
+
             return true;
         }
 
-        public void encode_username()
+        public void encode_username(string username)
         {
-
+            for (int idx = 0; idx <= username.Length && idx <= username_length; idx++)
+            {
+                _data[username_offset() + idx] = Convert.ToByte(username[idx]);
+            }
         }
 
 
