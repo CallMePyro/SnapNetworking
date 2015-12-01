@@ -139,6 +139,12 @@
     <ClInclude Include="participant.h" />
     <ClInclude Include="server.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\bin\cppdb.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\bin\cppdb.lib" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

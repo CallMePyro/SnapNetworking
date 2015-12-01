@@ -54,4 +54,14 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\bin\cppdb.dll">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\bin\cppdb.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+  </ItemGroup>
 </Project>
