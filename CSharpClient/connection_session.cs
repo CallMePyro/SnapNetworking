@@ -13,6 +13,7 @@ namespace CSharpClient
     {
         public connection_session(string host, int port, string username, string password)
         {
+            _username = username;
             //connect to a remote device
             try
             {
