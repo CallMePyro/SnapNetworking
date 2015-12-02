@@ -1,6 +1,6 @@
 #include "server.h"
 
-server::server( io_service & service, int port, const db_conn_str & con_str ): _acceptor( service, tcp::endpoint( tcp::v4(), port ) ), _socket( service ), _sql_server( con_str.get() )
+server::server( io_service & service, int port ): _acceptor( service, tcp::endpoint( tcp::v4(), port ) ), _socket( service )
 {
 	accept();
 }
@@ -22,7 +22,7 @@ void server::accept()
 			{
 				send_id(); //when a client connects initially, send them their ID
 
-				std::make_shared<client>( std::move( _socket ), _room, _sql_server, cur_id, user )->start(); //set the socket in an asynchronous waiting state
+				std::make_shared<client>( std::move( _socket ), _room, cur_id, user )->start(); //set the socket in an asynchronous waiting state
 				cout << user << " (id: " << cur_id << ") has connected to the server\n";
 				cur_id++;
 			}

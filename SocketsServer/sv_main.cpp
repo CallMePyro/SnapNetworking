@@ -11,6 +11,7 @@ using boost::asio::ip::tcp; //tcp master race
 #include <cppdb\driver_manager.h>
 #include <cppdb\backend.h>
 #include "db_conn_str.h"
+#include "sql_singleton.h"
 
 #include <iostream>
 using std::cin;
@@ -30,21 +31,24 @@ int main()
 		cout << "Enter server port: ";
 		cin >> port;
 
+		db_conn_str con_str( "aura.students.cset.oit.edu", "ryan_williams", "ryan_williams", "Dr8g0nk1n7!" );
+		sql_singleton::instance().open( con_str.get() );
+		cout << "Sucessfully connected to database.\n";
+
 		io_service io_service;
 
-		db_conn_str con_str( "aura.students.cset.oit.edu", "ryan_williams", "ryan_williams", "Dr8g0nk1n7!" );
-		server server( io_service, port, con_str );
+		server server( io_service, port );
 
-		thread t( [port]() { cout << "Server successfully connected to database and is listening on port " << port << "...\n"; } ); //it's a threaded 'cout' statement. We're in the future now boys
+		cout << "Server is listening on port " << port << "...\n";
 		io_service.run();
 	}
 	catch( cppdb::cppdb_error & e ) //if it's a database error we'll catch that first
 	{
-		cout << "Exception: " << e.what() << '\n';
+		cout << "Database Exception: " << e.what() << '\n';
 	}
 	catch( std::exception & e ) //otherwise who knows what went wrong, jesus.
 	{
-		cout << "Exception: " << e.what() << "\n";
+		cout << "General Exception: " << e.what() << "\n";
 	}
 
 	system( "pause" );

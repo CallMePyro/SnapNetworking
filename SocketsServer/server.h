@@ -21,14 +21,13 @@ using std::string;
 class server
 {
 public:
-	server( io_service & io_service, int port, const db_conn_str & con_str );
+	server( io_service & io_service, int port );
 
 private:
 	void accept();
 	void send_id();
 	void send_fail_auth();
 
-	cppdb::session _sql_server;
 	tcp::acceptor _acceptor;
 	tcp::socket _socket;
 	client_handler _room;

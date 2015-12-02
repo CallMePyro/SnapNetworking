@@ -1,5 +1,9 @@
 #include "client.h"
 
+client::client( tcp::socket socket, client_handler & room, int id, string user ): _socket( std::move( socket ) ), _connected_clients( room ), _id( id ), _username( user )
+{
+}
+
 void client::start()
 {
 	_connected_clients.join( shared_from_this() );
@@ -8,7 +12,7 @@ void client::start()
 
 void client::deliver( const message & msg )
 {
-	if( msg.get_id() == _id ) //onlu deliver a message to the client that's expecting it
+	if( msg.get_id() == _id ) //only deliver a message to the client that's expecting it
 	{
 		bool empty = _msg_queue.empty();
 		_msg_queue.push_back( msg );
@@ -78,7 +82,7 @@ void client::parse_message()
 	{
 		string body( _cur_msg.body(), _cur_msg.body_length() );
 
-		std::stringstream total;
+		stringstream total;
 		if( body != "" )
 		{
 			cout << _cur_msg.get_username() << ": " << body << '\n';
@@ -86,13 +90,13 @@ void client::parse_message()
 			//print out SQL Query Result
 			try
 			{
-				cppdb::result r = _sql_sv_ref << body;
-				while( r.next() )
+				cppdb::result r = sql_singleton::instance() << body;
+				while( r.next() ) //for each row in the result set
 				{
-					for( int i = 0; i < r.cols(); ++i )
+					for( int i = 0; i < r.cols(); ++i ) //for each column in each row
 					{
 						string t;
-						r >> t;
+						r >> t; //write the value to our stringstream
 						total << t << ' ';
 					}
 					total << '\n';
@@ -104,8 +108,7 @@ void client::parse_message()
 			}
 
 			_cur_msg.write( total.str().c_str() );
-			string body( _cur_msg.body(), _cur_msg.body_length() );
-			cout << body;
+			cout << total.str();
 			_connected_clients.deliver( _cur_msg );
 
 		}

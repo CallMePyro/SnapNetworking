@@ -59,5 +59,8 @@
     <ClInclude Include="db_conn_str.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sql_singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

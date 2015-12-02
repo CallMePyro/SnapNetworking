@@ -142,6 +142,7 @@
     <ClInclude Include="db_conn_str.h" />
     <ClInclude Include="participant.h" />
     <ClInclude Include="server.h" />
+    <ClInclude Include="sql_singleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

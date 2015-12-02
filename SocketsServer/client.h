@@ -15,18 +15,19 @@ using boost::asio::async_write;
 using std::cout;
 #include <string>
 using std::string;
+using std::stringstream;
 #include <deque>
 using std::deque;
 #include <memory>
 using std::shared_ptr;
 #include <set>
 using std::set;
+#include "sql_singleton.h"
 
 class client: public participant, public std::enable_shared_from_this<client>
 {
 public:
-	//Not gunna bother putting only the initialization list in the cpp
-	client( tcp::socket socket, client_handler & room, cppdb::session & s_ref, int id, string user ): _socket( std::move( socket ) ), _connected_clients( room ), _id( id ), _username( user ), _sql_sv_ref( s_ref ) {}
+	client( tcp::socket socket, client_handler & room, int id, string user );
 
 	void start();
 	void deliver( const message & msg ) override;
@@ -45,5 +46,4 @@ private:
 	deque<message> _msg_queue;
 	int _id;
 	string _username;
-	cppdb::session & _sql_sv_ref;
 };
