@@ -129,6 +129,7 @@
     <ClCompile Include="..\SharedCode\message.cpp" />
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="db_conn_str.cpp" />
     <ClCompile Include="sv_main.cpp" />
     <ClCompile Include="client_handler.cpp" />
     <ClCompile Include="server.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="auth.h" />
     <ClInclude Include="client.h" />
     <ClInclude Include="client_handler.h" />
+    <ClInclude Include="db_conn_str.h" />
     <ClInclude Include="participant.h" />
     <ClInclude Include="server.h" />
   </ItemGroup>

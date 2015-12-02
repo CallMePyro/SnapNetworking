@@ -106,5 +106,5 @@ void connection_session::parse_message( const string & message )
 	if( message == "valid_login" && _id == -1 )
 		_id = _cur_msg.get_id();
 	else if( message != "" )
-		cout << _cur_msg.get_id() << ": " << message << '\n';
+		cout << message << '\n';
 }

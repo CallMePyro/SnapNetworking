@@ -1,10 +1,16 @@
+#pragma region Includes
 #include <boost/asio.hpp>
+using boost::asio::ip::address;
+using boost::asio::io_service;
+using boost::asio::ip::tcp; //tcp master race
+
 #include "client.h"
 #include "server.h"
 
 #include <cppdb/frontend.h>
 #include <cppdb\driver_manager.h>
 #include <cppdb\backend.h>
+#include "db_conn_str.h"
 
 #include <iostream>
 using std::cin;
@@ -13,14 +19,11 @@ using std::cout;
 using std::string;
 #include <thread>
 using std::thread;
+#pragma endregion Includes
 
-using boost::asio::ip::address;
-using boost::asio::io_service;
-using boost::asio::ip::tcp; //tcp master race
 
 int main()
 {
-	/*
 	try
 	{
 		int port;
@@ -29,33 +32,19 @@ int main()
 
 		io_service io_service;
 
-		tcp::endpoint endpoint( tcp::v4(), port );
-		server server( io_service, endpoint );
+		db_conn_str con_str( "aura.students.cset.oit.edu", "ryan_williams", "ryan_williams", "Dr8g0nk1n7!" );
+		server server( io_service, port, con_str );
 
-		cout << "Server listening on port " << port << "...\n";
+		thread t( [port]() { cout << "Server successfully connected to database and is listening on port " << port << "...\n"; } ); //it's a threaded 'cout' statement. We're in the future now boys
 		io_service.run();
 	}
-	catch( std::exception& e )
+	catch( cppdb::cppdb_error & e ) //if it's a database error we'll catch that first
 	{
-		std::cerr << "Exception: " << e.what() << "\n";
+		cout << "Exception: " << e.what() << '\n';
 	}
-	//*/
-	try
+	catch( std::exception & e ) //otherwise who knows what went wrong, jesus.
 	{
-		cppdb::session sql( "odbc:Driver={SQL Server};SERVER=aura.students.cset.oit.edu;DATABASE=ryan_williams;UID=ryan_williams;PWD=Dr8g0nk1n7!" );
-		cppdb::result r = sql << "SELECT name FROM SnapProducts";
-		while( r.next() )
-		{
-			string name;
-			r.fetch( 0, name );
-			cout << name << '\n';
-		}
-
-
-	}
-	catch( const cppdb::cppdb_error & e )
-	{
-		cout << e.what() << '\n';
+		cout << "Exception: " << e.what() << "\n";
 	}
 
 	system( "pause" );

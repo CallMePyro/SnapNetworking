@@ -8,7 +8,7 @@ void client::start()
 
 void client::deliver( const message & msg )
 {
-	if( msg.get_id() != _id )
+	if( msg.get_id() == _id ) //onlu deliver a message to the client that's expecting it
 	{
 		bool empty = _msg_queue.empty();
 		_msg_queue.push_back( msg );
@@ -78,10 +78,36 @@ void client::parse_message()
 	{
 		string body( _cur_msg.body(), _cur_msg.body_length() );
 
+		std::stringstream total;
 		if( body != "" )
 		{
-			_connected_clients.deliver( _cur_msg );
 			cout << _cur_msg.get_username() << ": " << body << '\n';
+
+			//print out SQL Query Result
+			try
+			{
+				cppdb::result r = _sql_sv_ref << body;
+				while( r.next() )
+				{
+					for( int i = 0; i < r.cols(); ++i )
+					{
+						string t;
+						r >> t;
+						total << t << ' ';
+					}
+					total << '\n';
+				}
+			}
+			catch( cppdb::cppdb_error & e )
+			{
+				cout << e.what() << '\n';
+			}
+
+			_cur_msg.write( total.str().c_str() );
+			string body( _cur_msg.body(), _cur_msg.body_length() );
+			cout << body;
+			_connected_clients.deliver( _cur_msg );
+
 		}
 	}
 }
