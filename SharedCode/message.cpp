@@ -248,6 +248,7 @@ void message::encode_username( string username )
 	for( unsigned i = 0; i <= (int)message::username_length && i < username.length(); ++i )
 		this->username()[i] = username[i];
 }
+
 // get_id()
 /*****************************************************************
 * Purpose:
@@ -257,7 +258,6 @@ void message::encode_username( string username )
 * Exit:
 *
 ****************************************************************/
- 
 int message::get_id() const
 {
 	return _id;

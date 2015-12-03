@@ -43,19 +43,8 @@ bool auth::valid_login( const string & user, const string & pass )
 * Exit:
 *
 ****************************************************************/
+
 string auth::hash_salt_password( const string & user, const string & pass )
 {
-	string salt = user + pass;
-	string output;
-	CryptoPP::SHA256 hash;
-	byte digest[CryptoPP::SHA256::DIGESTSIZE];
-
-	hash.CalculateDigest( digest, (const byte *)salt.c_str(), salt.size() );
-
-	CryptoPP::HexEncoder encoder;
-	CryptoPP::StringSink SS = output;
-	encoder.Attach( &SS );
-	encoder.Put( digest, sizeof( digest ) );
-	encoder.MessageEnd();
-	return output;
+	return string();
 }

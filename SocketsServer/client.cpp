@@ -167,15 +167,6 @@ void client::parse_message()
 		{
 			cout << _cur_msg.get_username() << ": " << body << '\n';
 
-//= instance()
-/*****************************************************************
-* Purpose:
-*
-* Entry:
-*
-* Exit:
-*
-****************************************************************/
 			//print out SQL Query Result
 			try
 			{

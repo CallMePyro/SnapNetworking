@@ -48,15 +48,6 @@ void server::accept()
 			{
 				send_id(); //when a client connects initially, send them their ID
 
-//Constructor make_shared<client>(std::move( _socket)
-/*****************************************************************
-* Purpose:
-*
-* Entry:
-*
-* Exit:
-*
-****************************************************************/
 				std::make_shared<client>( std::move( _socket ), _room, cur_id, user )->start(); //set the socket in an asynchronous waiting state
 				cout << user << " (id: " << cur_id << ") has connected to the server\n";
 				cur_id++;

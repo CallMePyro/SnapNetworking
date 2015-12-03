@@ -8,14 +8,11 @@
 ****************************************************************/
 #pragma once
 
+#include "../SharedCode/scrypt-jane.h"
 #include <string>
 using std::string;
 #include <iostream>
 #include "sql_singleton.h"
-
-#include "cryptopp563\hex.h"
-#include "cryptopp563/sha.h"
-#include "cryptopp563/base64.h"
 
 /************************************************************************
 * Class: auth, inherits from: None

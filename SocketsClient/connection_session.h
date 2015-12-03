@@ -114,7 +114,6 @@ private:
 
 	void write();
 
-private:
 	io_service & _service;
 	tcp::socket _socket;
 	message _cur_msg;

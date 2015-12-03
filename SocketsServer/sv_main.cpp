@@ -20,13 +20,9 @@ using cppdb::cppdb_error;
 #include "db_conn_str.h"
 #include "sql_singleton.h"
 
-//cryptopp includes( password hashing )
-#include "cryptopp563\hex.h"
-#include "cryptopp563\sha.h"
-#include "cryptopp563\base64.h"
-
 #include "client.h"
 #include "server.h"
+#include "../SharedCode/scrypt-jane.h"
 
 #include <iostream>
 using std::cin;
@@ -41,35 +37,37 @@ using std::exception;
 
 db_conn_str load_connection_string();
 
+#define RESULT_SIZE 16
+#ifdef _DEBUG
+	#define N_FACTOR 13 //how many chunks, increases both memory and CPU usage
+#else
+	#define N_FACTOR 16
+#endif
+#define R_FACTOR 3 //how many blocks are in a chunk, increases memory usage
+#define P_FACTOR 1 //how many passes over N chunks. Increases CPU usage
+//15 = 5 seconds
+
+string hash_salt_password( const string & user, const string & pass )
+{
+	unsigned char res[RESULT_SIZE];
+
+	unsigned char * p = (unsigned char *)pass.c_str();
+	unsigned char * s = (unsigned char *)user.c_str();
+
+	scrypt( p, pass.length(), s, user.length(), N_FACTOR, R_FACTOR, P_FACTOR, res, RESULT_SIZE );
+	return string( (char *)res );
+}
+
+
 int main()
 {
+#ifdef _DEBUG
+	cout << "DEBUG BUILD. THIS WILL GREALY SLOW DOWN PASSWORD HASHING\n";
+#endif
 
-	string user = "jacob";
-	string pass = "asmuth";
-
-////cout hash_salt_password(user , pass )
-/*****************************************************************
-* Purpose:
-*
-* Entry:
-*
-* Exit:
-*
-****************************************************************/
-	//cout << auth::hash_salt_password( user, pass ) << '\n';
 	unsigned short port;
 	cout << "Enter server port: ";
 	cin >> port;
-
-//Constructor instance()
-/*****************************************************************
-* Purpose:
-*
-* Entry:
-*
-* Exit:
-*
-****************************************************************/
 	try
 	{
 		sql_singleton::instance().open( load_connection_string().get() );

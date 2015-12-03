@@ -49,9 +49,6 @@ int main()
 
 		thread thread( [&service]() { service.run(); } );
 
-
-		//THIS IS VERY PROOF OF CONCEPT
-
 		char line[message::max_body_length + 1];
 		cin.ignore();
 		while( cin.getline( line, message::max_body_length ) )
