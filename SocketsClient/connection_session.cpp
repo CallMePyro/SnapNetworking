@@ -1,5 +1,22 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SocketsClient
+* Filename: connection_session.cpp
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #include "connection_session.h"
 
+//Constructor connection_session(io_service& service, const string & host, const string & port, const string & username, const string & pass)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 connection_session::connection_session( io_service& service, const string & host, const string & port, const string & username, const string & pass ): _service( service ), _socket( service ), _id( -1 ), _username( username )
 {
 	tcp::resolver resolver( service );
@@ -7,6 +24,15 @@ connection_session::connection_session( io_service& service, const string & host
 	connect( endpoint_iterator, pass );
 }
 
+// write(const message & msg)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::write( const message & msg )
 {
 	_service.post( [this, msg]()
@@ -18,11 +44,29 @@ void connection_session::write( const message & msg )
 	} );
 }
 
+// close()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::close()
 {
 	_service.post( [this]() { _socket.close(); } );
 }
 
+// connect(tcp::resolver::iterator endpoint_iterator, const string & pass)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::connect( tcp::resolver::iterator endpoint_iterator, const string & pass )
 {
 	//this lambda is called before each connection on the endpoint iterator
@@ -37,6 +81,15 @@ void connection_session::connect( tcp::resolver::iterator endpoint_iterator, con
 	} );
 }
 
+// read_header()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::read_header()
 {
 	async_read( _socket, buffer( _cur_msg.data(), message::header_length ), [this]( error_code ec, size_t len )
@@ -48,6 +101,15 @@ void connection_session::read_header()
 	} );
 }
 
+// read_id()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::read_id()
 {
 	async_read( _socket, buffer( _cur_msg.id(), message::id_length ), [this]( error_code ec, size_t len )
@@ -64,6 +126,15 @@ void connection_session::read_id()
 	} );
 }
 
+// read_body()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::read_body()
 {
 	async_read( _socket, buffer( _cur_msg.body(), _cur_msg.body_length() ), [this]( error_code ec, size_t len )
@@ -82,6 +153,15 @@ void connection_session::read_body()
 	} );
 }
 
+// write()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::write()
 {
 	_msg_queue.front().encode_id( _id ); //always attach our uniqueID to the message
@@ -101,6 +181,15 @@ void connection_session::write()
 	} );
 }
 
+// parse_message(const string & message)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void connection_session::parse_message( const string & message )
 {
 	if( message == "valid_login" && _id == -1 )

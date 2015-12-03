@@ -1,32 +1,103 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SharedCode
+* Filename: message.cpp
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #include "message.h"
 
+//Constructor message()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 message::message(): _body_length( 0 ), _username( "" ) {}
 
+//Constructor message(const char * buf)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 message::message( const char * buf )
 {
 	write( buf );
 }
 
+//* data()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 char * message::data()
 {
 	return _data;
 }
 
+//* id()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 char * message::id()
 {
 	return _data + header_length;
 }
 
+//char* body()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 char* message::body()
 {
 	return _data + header_length + id_length;
 }
 
+//* username()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 char * message::username()
 {
 	return _data + header_length + id_length + _body_length;
 }
 
+// total_length()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 size_t message::total_length() const
 {
 #ifdef CLIENT
@@ -36,16 +107,43 @@ size_t message::total_length() const
 #endif
 }
 
+// body_length()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 size_t message::body_length() const
 {
 	return _body_length;
 }
 
+// body_length(size_t new_length)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void message::body_length( size_t new_length )
 {
 	_body_length = new_length > max_body_length ? max_body_length : new_length;
 }
 
+// write(const char * buf)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void message::write( const char * buf )
 {
 	body_length( strlen( buf ) );
@@ -53,6 +151,15 @@ void message::write( const char * buf )
 	encode_header();
 }
 
+// decode_header()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 //when we decode it just take the bytes and convert them to an int. gotta love pointer gymnastics.
 bool message::decode_header()
 {
@@ -60,6 +167,15 @@ bool message::decode_header()
 	return _body_length >= 0;
 }
 
+// encode_header()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 //I know this looks like hell. Basically just write 8 bits at a time to the buffer
 void message::encode_header()
 {
@@ -69,11 +185,29 @@ void message::encode_header()
 	_data[0] = _body_length & 0xFF ;
 }
 
+// decode_id()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void message::decode_id()
 {
 	_id = *(int*)id();
 }
 
+// encode_id(int id)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void message::encode_id( int id )
 {
 	this->id()[3] = ( id >> 24 ) & 0xFF;
@@ -82,6 +216,15 @@ void message::encode_id( int id )
 	this->id()[0] = id & 0xFF;
 }
 
+// decode_username()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void message::decode_username()
 {
 	char buf[message::username_length] = { '\0' };
@@ -90,18 +233,45 @@ void message::decode_username()
 	_username = buf;
 }
 
+// encode_username(string username)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void message::encode_username( string username )
 {
 	memset( this->username(), '\0', message::username_length );
 	for( unsigned i = 0; i <= (int)message::username_length && i < username.length(); ++i )
 		this->username()[i] = username[i];
 }
+// get_id()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
  
 int message::get_id() const
 {
 	return _id;
 }
 
+// get_username()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 string message::get_username() const
 {
 	return _username;

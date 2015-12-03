@@ -1,3 +1,11 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SocketsClient
+* Filename: connection_session.h
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #pragma once
 #include "../SharedCode/message.h"
 #include <boost/asio.hpp>
@@ -16,6 +24,78 @@ using std::cin;
 #include <string>
 using std::string;
 
+/************************************************************************
+* Class: connection_session, inherits from: None
+*
+* Purpose:
+*
+* Manager functions:	
+*
+*	Constructor connection_session(io_service & service, const string & host, const string & port, const string & username, const string & pass)
+*		Modifiers: public    
+*		Description:
+*
+*
+* Operator overloads:
+*
+*
+* Methods:	
+*	
+*	void write(const message & msg)
+*		Modifiers: public    
+*		Description:
+*
+*	void close()
+*		Modifiers: public    
+*		Description:
+*
+*	void connect(tcp::resolver::iterator endpoint_iterator, const string & pass)
+*		Modifiers: private    
+*		Description:
+*
+*	void read_header()
+*		Modifiers: private    
+*		Description:
+*
+*	void read_id()
+*		Modifiers: private    
+*		Description:
+*
+*	void read_body()
+*		Modifiers: private    
+*		Description:
+*
+*	void parse_message(const string & message)
+*		Modifiers: private    
+*		Description:
+*
+*	void write()
+*		Modifiers: private    
+*		Description:
+*
+*
+* Data Members:
+*
+*	io_service & _service 
+*		modifiers: private  
+*
+*	tcp::socket _socket 
+*		modifiers: private  
+*
+*	message _cur_msg 
+*		modifiers: private  
+*
+*	deque<message> _msg_queue 
+*		modifiers: private  
+*
+*	int _id 
+*		modifiers: private  
+*
+*	string _username 
+*		modifiers: private  
+*
+*
+*************************************************************************/
 class connection_session
 {
 public:

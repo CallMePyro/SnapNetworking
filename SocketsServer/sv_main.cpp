@@ -1,3 +1,11 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SocketsServer
+* Filename: sv_main.cpp
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #pragma region includes
 
 //boost includes(networking)
@@ -39,11 +47,29 @@ int main()
 	string user = "jacob";
 	string pass = "asmuth";
 
+////cout hash_salt_password(user , pass )
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 	//cout << auth::hash_salt_password( user, pass ) << '\n';
 	unsigned short port;
 	cout << "Enter server port: ";
 	cin >> port;
 
+//Constructor instance()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 	try
 	{
 		sql_singleton::instance().open( load_connection_string().get() );

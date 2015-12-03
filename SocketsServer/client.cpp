@@ -1,15 +1,50 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SocketsServer
+* Filename: client.cpp
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #include "client.h"
 
+//Constructor client(tcp::socket socket, client_handler & room, int id, string user)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 client::client( tcp::socket socket, client_handler & room, int id, string user ): _socket( std::move( socket ) ), _connected_clients( room ), _id( id ), _username( user )
 {
 }
 
+// start()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::start()
 {
 	_connected_clients.join( shared_from_this() );
 	read_header();
 }
 
+// deliver(const message & msg)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::deliver( const message & msg )
 {
 	if( msg.get_id() == _id ) //only deliver a message to the client that's expecting it
@@ -21,6 +56,15 @@ void client::deliver( const message & msg )
 	}
 }
 
+// read_header()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::read_header()
 {
 	async_read( _socket, buffer( _cur_msg.data(), message::header_length ), [this]( error_code ec, size_t len )
@@ -32,6 +76,15 @@ void client::read_header()
 	} );
 }
 
+// read_id()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::read_id()
 {
 	async_read( _socket, buffer( _cur_msg.id(), message::id_length ), [this]( error_code ec, size_t len )
@@ -48,6 +101,15 @@ void client::read_id()
 	} );
 }
 
+// read_body()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::read_body()
 {
 	async_read( _socket, buffer( _cur_msg.body(), _cur_msg.body_length() ), [this]( error_code ec, size_t len )
@@ -59,6 +121,15 @@ void client::read_body()
 	} );
 }
 
+// read_username()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::read_username()
 {
 	async_read( _socket, buffer( _cur_msg.username(), message::username_length ), [this]( error_code ec, size_t len )
@@ -76,6 +147,15 @@ void client::read_username()
 	} );
 }
 
+// parse_message()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::parse_message()
 {
 	if( _cur_msg.get_id() == _id && _cur_msg.get_username() == _username ) //wow real secure jacob
@@ -87,6 +167,15 @@ void client::parse_message()
 		{
 			cout << _cur_msg.get_username() << ": " << body << '\n';
 
+//= instance()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 			//print out SQL Query Result
 			try
 			{
@@ -115,6 +204,15 @@ void client::parse_message()
 	}
 }
 
+// write()
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 void client::write()
 {
 	async_write( _socket, buffer( _msg_queue.front().data(), _msg_queue.front().total_length() ), [this]( error_code ec, size_t length )

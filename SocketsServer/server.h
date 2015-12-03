@@ -1,3 +1,11 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SocketsServer
+* Filename: server.h
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #pragma once
 
 #include "client.h"
@@ -18,6 +26,52 @@ using std::vector;
 #include <string>
 using std::string;
 
+/************************************************************************
+* Class: server, inherits from: None
+*
+* Purpose:
+*
+* Manager functions:	
+*
+*	Constructor server(io_service & io_service, unsigned short port)
+*		Modifiers: public    
+*		Description:
+*
+*
+* Operator overloads:
+*
+*
+* Methods:	
+*	
+*	void accept()
+*		Modifiers: private    
+*		Description:
+*
+*	void send_id()
+*		Modifiers: private    
+*		Description:
+*
+*	void send_fail_auth()
+*		Modifiers: private    
+*		Description:
+*
+*
+* Data Members:
+*
+*	tcp::acceptor _acceptor 
+*		modifiers: private  
+*
+*	tcp::socket _socket 
+*		modifiers: private  
+*
+*	client_handler _room 
+*		modifiers: private  
+*
+*	int cur_id = 1
+*		modifiers: private  
+*
+*
+*************************************************************************/
 class server
 {
 public:

@@ -1,5 +1,22 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SocketsServer
+* Filename: auth.cpp
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #include "auth.h"
 
+// valid_login(const string & user, const string & pass)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 bool auth::valid_login( const string & user, const string & pass )
 {
 	try
@@ -17,6 +34,15 @@ bool auth::valid_login( const string & user, const string & pass )
 	}
 }
 
+// hash_salt_password(const string & user, const string & pass)
+/*****************************************************************
+* Purpose:
+*
+* Entry:
+*
+* Exit:
+*
+****************************************************************/
 string auth::hash_salt_password( const string & user, const string & pass )
 {
 	string salt = user + pass;

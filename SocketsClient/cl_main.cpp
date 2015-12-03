@@ -1,3 +1,11 @@
+/*****************************************************************
+* Author: Jacob Asmuth
+* Project: SocketsClient
+* Filename: cl_main.cpp
+* Date Created: 12/2/2015
+* Modifications:
+*
+****************************************************************/
 #include "../SharedCode/message.h"
 #include "connection_session.h"
 #include <boost/asio.hpp>
