@@ -53,7 +53,7 @@ void message::write( const char * buf )
 	encode_header();
 }
 
-//when we decode it just take the bytes, and convert them to an int. gotta love pointer gymnastics.
+//when we decode it just take the bytes and convert them to an int. gotta love pointer gymnastics.
 bool message::decode_header()
 {
 	_body_length = *(int *)_data;

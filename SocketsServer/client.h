@@ -1,4 +1,5 @@
 #pragma once
+#pragma region includes
 #include "../SharedCode/message.h"
 #include "participant.h"
 #include "client_handler.h"
@@ -23,6 +24,7 @@ using std::shared_ptr;
 #include <set>
 using std::set;
 #include "sql_singleton.h"
+#pragma endregion
 
 class client: public participant, public std::enable_shared_from_this<client>
 {

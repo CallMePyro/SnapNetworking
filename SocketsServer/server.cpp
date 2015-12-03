@@ -1,6 +1,6 @@
 #include "server.h"
 
-server::server( io_service & service, int port ): _acceptor( service, tcp::endpoint( tcp::v4(), port ) ), _socket( service )
+server::server( io_service & service, unsigned short port ): _acceptor( service, tcp::endpoint( tcp::v4(), port ) ), _socket( service )
 {
 	accept();
 }
@@ -27,7 +27,10 @@ void server::accept()
 				cur_id++;
 			}
 			else
+			{
 				send_fail_auth();
+				_socket.close();
+			}
 
 		}
 		accept();

@@ -21,7 +21,7 @@ using std::string;
 class server
 {
 public:
-	server( io_service & io_service, int port );
+	server( io_service & io_service, unsigned short port );
 
 private:
 	void accept();

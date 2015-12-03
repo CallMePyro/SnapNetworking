@@ -1,52 +1,65 @@
-#pragma region Includes
+#pragma region includes
+
+//boost includes(networking)
 #include <boost/asio.hpp>
 using boost::asio::ip::address;
 using boost::asio::io_service;
 using boost::asio::ip::tcp; //tcp master race
 
-#include "client.h"
-#include "server.h"
-
+//cppdb includes(sql server)
 #include <cppdb/frontend.h>
-#include <cppdb\driver_manager.h>
-#include <cppdb\backend.h>
+using cppdb::cppdb_error;
 #include "db_conn_str.h"
 #include "sql_singleton.h"
+
+//cryptopp includes( password hashing )
+#include "cryptopp563\hex.h"
+#include "cryptopp563\sha.h"
+#include "cryptopp563\base64.h"
+
+#include "client.h"
+#include "server.h"
 
 #include <iostream>
 using std::cin;
 using std::cout;
 #include <string>
 using std::string;
-#include <thread>
-using std::thread;
-#pragma endregion Includes
+#include <fstream>
+using std::ifstream;
+#include <exception>
+using std::exception;
+#pragma endregion
 
+db_conn_str load_connection_string();
 
 int main()
 {
+
+	string user = "jacob";
+	string pass = "asmuth";
+
+	//cout << auth::hash_salt_password( user, pass ) << '\n';
+	unsigned short port;
+	cout << "Enter server port: ";
+	cin >> port;
+
 	try
 	{
-		int port;
-		cout << "Enter server port: ";
-		cin >> port;
-
-		db_conn_str con_str( "aura.students.cset.oit.edu", "ryan_williams", "ryan_williams", "Dr8g0nk1n7!" );
-		sql_singleton::instance().open( con_str.get() );
+		sql_singleton::instance().open( load_connection_string().get() );
 		cout << "Sucessfully connected to database.\n";
 
 		io_service io_service;
-
 		server server( io_service, port );
 
 		cout << "Server is listening on port " << port << "...\n";
 		io_service.run();
 	}
-	catch( cppdb::cppdb_error & e ) //if it's a database error we'll catch that first
+	catch( const cppdb_error & e ) //if it's a database error we'll catch that
 	{
 		cout << "Database Exception: " << e.what() << '\n';
 	}
-	catch( std::exception & e ) //otherwise who knows what went wrong, jesus.
+	catch( const exception & e ) //otherwise who knows what went wrong, jesus.
 	{
 		cout << "General Exception: " << e.what() << "\n";
 	}
@@ -54,3 +67,16 @@ int main()
 	system( "pause" );
 	return 0;
 }
+
+db_conn_str load_connection_string()
+{
+	ifstream file( "database_connection_info.txt" );
+	if( file.is_open() )
+	{
+		string server, db, user, pass;
+		file >> server >> db >> user >> pass;
+		return db_conn_str( server, db, user, pass );
+	}
+	else throw exception( "Cannot open database_connection_info.txt" );
+}
+

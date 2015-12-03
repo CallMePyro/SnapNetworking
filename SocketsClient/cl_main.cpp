@@ -31,9 +31,13 @@ int main()
 		cout << "Enter your username: ";
 		cin >> username;
 
+		string password;
+		cout << "Enter your password: ";
+		cin >> password;
+
 		io_service service;
 
-		connection_session connection( service, host, port, username, "password" );
+		connection_session connection( service, host, port, username, password );
 
 		thread thread( [&service]() { service.run(); } );
 
