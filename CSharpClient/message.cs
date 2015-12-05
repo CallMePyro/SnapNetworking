@@ -102,7 +102,8 @@ namespace CSharpClient
         public bool decode_username()
         {
             byte[] temp = new byte[username_length];
-
+            Array.Copy( _data, username_offset(), temp, 0, username_length );
+            _username = Convert.ToString( temp );
             return true;
         }
 

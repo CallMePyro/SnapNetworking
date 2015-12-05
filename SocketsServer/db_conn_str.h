@@ -121,7 +121,7 @@ private:
 	string _format_string = "odbc:Driver={SQL Server};SERVER=%SV%;DATABASE=%DB%;UID=%USER%;PWD=%PASS%";
 
 	string _server;
-	string _database;
+	string _database;	
 	string _username;
 	string _password;
 };

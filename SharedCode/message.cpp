@@ -33,7 +33,7 @@ message::message( const char * buf )
 	write( buf );
 }
 
-//* data()
+//char* data()
 /*****************************************************************
 * Purpose:
 *
@@ -47,7 +47,7 @@ char * message::data()
 	return _data;
 }
 
-//* id()
+//char* id()
 /*****************************************************************
 * Purpose:
 *
@@ -75,7 +75,7 @@ char* message::body()
 	return _data + header_length + id_length;
 }
 
-//* username()
+//char* username()
 /*****************************************************************
 * Purpose:
 *
@@ -89,7 +89,7 @@ char * message::username()
 	return _data + header_length + id_length + _body_length;
 }
 
-// total_length()
+//size_t total_length()
 /*****************************************************************
 * Purpose:
 *

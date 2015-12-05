@@ -45,7 +45,6 @@ db_conn_str load_connection_string();
 #endif
 #define R_FACTOR 3 //how many blocks are in a chunk, increases memory usage
 #define P_FACTOR 1 //how many passes over N chunks. Increases CPU usage
-//15 = 5 seconds
 
 string hash_salt_password( const string & user, const string & pass )
 {
