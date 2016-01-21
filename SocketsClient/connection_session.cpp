@@ -17,7 +17,8 @@
 * Exit:
 *
 ****************************************************************/
-connection_session::connection_session( io_service& service, const string & host, const string & port, const string & username, const string & pass ): _service( service ), _socket( service ), _id( -1 ), _username( username )
+connection_session::connection_session( io_service& service, const string & host, const string & port, const string & username, const string & pass ): 
+	_service( service ), _socket( service ), _id( -1 ), _username( username )
 {
 	tcp::resolver resolver( service );
 	auto endpoint_iterator = resolver.resolve( { host, port } );

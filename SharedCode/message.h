@@ -22,7 +22,7 @@ using std::size_t;
 * Manager functions:	
 *
 *	Constructor message()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	Constructor message(const char * buf)

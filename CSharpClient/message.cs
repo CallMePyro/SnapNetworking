@@ -10,7 +10,7 @@ namespace CSharpClient
     {
         public static readonly int header_length = 4;
         public static readonly int id_length = 4;
-        public static readonly int max_body_length = 512;
+        public static readonly int max_body_length = 200000;
         public static readonly int username_length = 24;
 
         public message()
@@ -20,7 +20,7 @@ namespace CSharpClient
 
         public message(string buf)
         {
-            write(buf);
+            write( buf );
         }
 
         public byte[] data()
@@ -67,17 +67,17 @@ namespace CSharpClient
         public bool decode_header()
         {
             _body_length = BitConverter.ToInt32(_data, 0);
-            return true;
+            return _body_length >= 0;
         }
 
         public void encode_header()
         {
             unchecked //IIIIIIIIIII'M A BAAAAD PERSOOOOOONNN
             {
-                _data[0] = (byte)(_body_length >> 24);
-                _data[1] = (byte)(_body_length >> 16);
-                _data[2] = (byte)(_body_length >> 8);
-                _data[3] = (byte)(_body_length);
+                _data[3] = (byte)( ( _body_length >> 24 ) & 0xFF );
+                _data[2] = (byte)( ( _body_length >> 16 ) & 0xFF );
+                _data[1] = (byte)( ( _body_length >> 8 ) & 0xFF );
+                _data[0] = (byte)( ( _body_length ) & 0xFF );
             }
         }
 
@@ -92,10 +92,10 @@ namespace CSharpClient
         {
             unchecked //IIIIIIIIIII'M A BAAAAD PERSOOOOOONNN
             {
-                _data[0 + id_offset()] = (byte)(id >> 24);
-                _data[1 + id_offset()] = (byte)(id >> 16);
-                _data[2 + id_offset()] = (byte)(id >> 8);
-                _data[3 + id_offset()] = (byte)(id);
+                _data[3 + id_offset()] = (byte)( ( id >> 24 ) & 0xFF );
+                _data[2 + id_offset()] = (byte)( ( id >> 16 ) & 0xFF );
+                _data[1 + id_offset()] = (byte)( ( id >> 8 ) & 0xFF );
+                _data[0 + id_offset()] = (byte)( ( id ) & 0xFF );
             }
         }
 
@@ -109,14 +109,19 @@ namespace CSharpClient
 
         public void encode_username(string username)
         {
-            for (int idx = 0; idx <= username.Length && idx <= username_length; idx++)
+            _username = username;
+            for (int idx = 0; idx < username.Length && idx < username_length; idx++)
             {
-                _data[username_offset() + idx] = Convert.ToByte(username[idx]);
+                _data[username_offset() + idx] = Convert.ToByte( username[idx] );
             }
         }
 
+        public override string ToString()
+        {
+            return Encoding.ASCII.GetString( _data, message.header_length + message.id_length, _body_length );
+        }
 
-        byte[] _data = new byte[max_body_length];
+        public byte[] _data { get; private set; } = new byte[header_length + id_length + max_body_length + username_length];
         public int _body_length { get; private set; }
         public int _id { get; private set; }
         string _username;
