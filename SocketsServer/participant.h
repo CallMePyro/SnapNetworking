@@ -14,16 +14,16 @@
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *
 * Operator overloads:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	void deliver(const message & msg)
-*		Modifiers: public   virtual 
+*		Modifiers: public   virtual
 *		Description:
 *
 *

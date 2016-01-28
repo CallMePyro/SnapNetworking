@@ -19,20 +19,20 @@ using std::string;
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *
 * Operator overloads:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	bool valid_login(const string & user, const string & pass)
-*		Modifiers: public  static  
+*		Modifiers: public  static
 *		Description:
 *
 *	string hash_salt_password(const string & user, const string & pass)
-*		Modifiers: public  static  
+*		Modifiers: public  static
 *		Description:
 *
 *
@@ -44,6 +44,6 @@ class auth
 {
 public:
 	static bool valid_login( const string & user, const string & pass );
-	static string hash_salt_password(const string & user, const string & pass );
+	static string hash_salt_password( const string & user, const string & pass );
 private:
 };

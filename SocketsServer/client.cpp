@@ -70,9 +70,7 @@ void client::read_header()
 	async_read( _socket, buffer( _cur_msg.data(), message::header_length ), [this]( error_code ec, size_t len )
 	{
 		if( !ec && _cur_msg.decode_header() )
-		{
-			read_id();	
-		}
+			read_id();
 		else
 			_connected_clients.leave( shared_from_this() );
 	} );
@@ -117,9 +115,7 @@ void client::read_body()
 	async_read( _socket, buffer( _cur_msg.body(), _cur_msg.body_length() ), [this]( error_code ec, size_t len )
 	{
 		if( !ec )
-		{
 			read_username();
-		}
 		else
 			_connected_clients.leave( shared_from_this() );
 	} );
@@ -165,6 +161,7 @@ void client::parse_message()
 	if( _cur_msg.get_id() == _id && _cur_msg.get_username() == _username ) //wow real secure jacob
 	{
 		string body( _cur_msg.body(), _cur_msg.body_length() );
+
 		stringstream total;
 		if( body != "" )
 		{
@@ -188,8 +185,6 @@ void client::parse_message()
 			catch( cppdb::cppdb_error & e )
 			{
 				cout << e.what() << '\n';
-				_cur_msg.write( e.what() );
-				_connected_clients.deliver( _cur_msg );
 			}
 
 			_cur_msg.write( total.str().c_str() );

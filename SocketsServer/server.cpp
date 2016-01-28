@@ -38,11 +38,11 @@ void server::accept()
 		if( !ec )
 		{
 			char buf[message::max_body_length] = { '\0' };
-			_socket.read_some( buffer( buf, 512 ) );
+			_socket.read_some( buffer( buf, message::max_body_length ) );
 
 			string user = strtok( buf, " " );
 			string pass = strtok( nullptr, " " );
-			//string ip = _socket.remote_endpoint().address().to_string(); //do we care about the IP address? probably not right now.
+			//string ip = _socket.remote_endpoint().address().to_string();
 
 			if( auth::valid_login( user, pass ) )
 			{

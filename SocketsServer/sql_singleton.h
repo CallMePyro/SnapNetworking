@@ -11,38 +11,38 @@
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *	Constructor sql_singleton()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	Constructor sql_singleton(sql_singleton const & copy)
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *
 * Operator overloads:
 *
 *	void operator=(sql_singleton const & copy)
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	cppdb::session & instance()
-*		Modifiers: public  static  
+*		Modifiers: public  static
 *		Description:
 *
 *
 * Data Members:
 *
-*	cppdb::session sv 
-*		modifiers: public static 
+*	cppdb::session sv
+*		modifiers: public static
 *
-*	return sv 
-*		modifiers: public  
+*	return sv
+*		modifiers: public
 *
 *
 *************************************************************************/

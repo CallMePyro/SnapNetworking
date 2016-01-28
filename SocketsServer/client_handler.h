@@ -22,34 +22,34 @@ using std::deque;
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *
 * Operator overloads:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	void join(shared_ptr<participant> participant)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void leave(shared_ptr<participant> participant)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void deliver(const message & msg)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *
 * Data Members:
 *
-*	set<shared_ptr<participant>> participants_ 
-*		modifiers: private  
+*	set<shared_ptr<participant>> participants_
+*		modifiers: private
 *
-*	deque<message> recent_msgs_ 
-*		modifiers: private  
+*	deque<message> recent_msgs_
+*		modifiers: private
 *
 *	int MAX_MESSAGES = 50; //if this value less than 1, there are unlimited messages allowed in the queue.
 *		modifiers: private static const

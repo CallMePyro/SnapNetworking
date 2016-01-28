@@ -23,7 +23,7 @@ using boost::asio::buffer;
 
 #include <vector>
 using std::vector;
-#include <string> 
+#include <string>
 using std::string;
 
 /************************************************************************
@@ -31,44 +31,44 @@ using std::string;
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *	Constructor server(io_service & io_service, unsigned short port)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *
 * Operator overloads:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	void accept()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	void send_id()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	void send_fail_auth()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *
 * Data Members:
 *
-*	tcp::acceptor _acceptor 
-*		modifiers: private  
+*	tcp::acceptor _acceptor
+*		modifiers: private
 *
-*	tcp::socket _socket 
-*		modifiers: private  
+*	tcp::socket _socket
+*		modifiers: private
 *
-*	client_handler _room 
-*		modifiers: private  
+*	client_handler _room
+*		modifiers: private
 *
 *	int cur_id = 1
-*		modifiers: private  
+*		modifiers: private
 *
 *
 *************************************************************************/

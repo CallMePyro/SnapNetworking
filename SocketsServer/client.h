@@ -39,66 +39,66 @@ using std::set;
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *	Constructor client(tcp::socket socket, client_handler & room, int id, string user)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *
 * Operator overloads:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	void start()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void read_header()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	void read_id()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	void read_body()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	void read_username()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	void write()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *	void parse_message()
-*		Modifiers: private    
+*		Modifiers: private
 *		Description:
 *
 *
 * Data Members:
 *
-*	tcp::socket _socket 
-*		modifiers: private  
+*	tcp::socket _socket
+*		modifiers: private
 *
-*	client_handler& _connected_clients 
-*		modifiers: private  
+*	client_handler& _connected_clients
+*		modifiers: private
 *
-*	message _cur_msg 
-*		modifiers: private  
+*	message _cur_msg
+*		modifiers: private
 *
-*	deque<message> _msg_queue 
-*		modifiers: private  
+*	deque<message> _msg_queue
+*		modifiers: private
 *
-*	int _id 
-*		modifiers: private  
+*	int _id
+*		modifiers: private
 *
-*	string _username 
-*		modifiers: private  
+*	string _username
+*		modifiers: private
 *
 *
 *************************************************************************/

@@ -14,7 +14,7 @@ using boost::asio::ip::address;
 using boost::asio::io_service;
 using boost::asio::ip::tcp; //tcp master race
 
-//cppdb includes(sql server)
+							//cppdb includes(sql server)
 #include <cppdb/frontend.h>
 using cppdb::cppdb_error;
 #include "db_conn_str.h"
@@ -39,9 +39,9 @@ db_conn_str load_connection_string();
 
 #define RESULT_SIZE 16
 #ifdef _DEBUG
-	#define N_FACTOR 13 //how many chunks, increases both memory and CPU usage
+#define N_FACTOR 13 //how many chunks, increases both memory and CPU usage
 #else
-	#define N_FACTOR 16
+#define N_FACTOR 16
 #endif
 #define R_FACTOR 3 //how many blocks are in a chunk, increases memory usage
 #define P_FACTOR 1 //how many passes over N chunks. Increases CPU usage

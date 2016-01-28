@@ -20,79 +20,79 @@ using boost::replace_all;
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *	Constructor db_conn_str(const string server = "", const string db = "", const string user = "", const string pass = "")
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *
 * Operator overloads:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	string format_string()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	void format_string(const string & format_string)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	string server()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	void server(const string & server)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	string database()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	void database(const string & database)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	string username()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	void username(const string & user)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	string password()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	void password(const string & pass)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	string get()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *
 * Data Members:
 *
 *	string _format_string = "odbc:Driver={SQL Server};SERVER=%SV%;DATABASE=%DB%;UID=%USER%;PWD=%PASS%"
-*		modifiers: private  
+*		modifiers: private
 *
-*	string _server 
-*		modifiers: private  
+*	string _server
+*		modifiers: private
 *
-*	string _database 
-*		modifiers: private  
+*	string _database
+*		modifiers: private
 *
-*	string _username 
-*		modifiers: private  
+*	string _username
+*		modifiers: private
 *
-*	string _password 
-*		modifiers: private  
+*	string _password
+*		modifiers: private
 *
 *
 *************************************************************************/
@@ -121,14 +121,14 @@ private:
 	string _format_string = "odbc:Driver={SQL Server};SERVER=%SV%;DATABASE=%DB%;UID=%USER%;PWD=%PASS%";
 
 	string _server;
-	string _database;	
+	string _database;
 	string _username;
 	string _password;
 };
 
 /* Formatting string format:
-	Anywhere %SV% is found, the server value will be inserted.
-	Anywhere %DB% is found, the database value will be inserted.
-	Anywhere %USER% is found, the username value will be inserted.
-	Anywhere %PASS% is found, the password value will be inserted.
+Anywhere %SV% is found, the server value will be inserted.
+Anywhere %DB% is found, the database value will be inserted.
+Anywhere %USER% is found, the username value will be inserted.
+Anywhere %PASS% is found, the password value will be inserted.
 */

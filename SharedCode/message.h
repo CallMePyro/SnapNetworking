@@ -19,112 +19,112 @@ using std::size_t;
 *
 * Purpose:
 *
-* Manager functions:	
+* Manager functions:
 *
 *	Constructor message()
 *		Modifiers: public
 *		Description:
 *
 *	Constructor message(const char * buf)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *
 * Operator overloads:
 *
 *
-* Methods:	
-*	
+* Methods:
+*
 *	char * data()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	char * id()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	char * body()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	char * username()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	size_t total_length()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	size_t body_length()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	void body_length(size_t new_length)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void write(const char * buf)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	bool decode_header()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void encode_header()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void decode_id()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void encode_id(int id)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void decode_username()
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	void encode_username(string username)
-*		Modifiers: public    
+*		Modifiers: public
 *		Description:
 *
 *	int get_id()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *	string get_username()
-*		Modifiers: public const   
+*		Modifiers: public const
 *		Description:
 *
 *
 * Data Members:
 *
 *	enum { header_length = 4 }
-*		modifiers: public  
+*		modifiers: public
 *
 *	enum { id_length = 4 }
-*		modifiers: public  
+*		modifiers: public
 *
 *	enum { max_body_length = 200000 }
-*		modifiers: public  
+*		modifiers: public
 *
 *	enum { username_length = 24 }
-*		modifiers: public  
+*		modifiers: public
 *
-*	char _data[header_length + id_length + username_length + max_body_length] 
-*		modifiers: private  
+*	char _data[header_length + id_length + username_length + max_body_length]
+*		modifiers: private
 *
-*	size_t _body_length 
-*		modifiers: private  
+*	size_t _body_length
+*		modifiers: private
 *
-*	int _id 
-*		modifiers: private  
+*	int _id
+*		modifiers: private
 *
-*	string _username 
-*		modifiers: private  
+*	string _username
+*		modifiers: private
 *
 *
 *************************************************************************/
@@ -135,7 +135,7 @@ public:
 	enum { id_length = 4 };
 	enum { max_body_length = 200000 };
 	enum { username_length = 24 };
-	 
+
 	message();
 	message( const char * buf );
 

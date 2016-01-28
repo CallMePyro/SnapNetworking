@@ -33,7 +33,7 @@ message::message( const char * buf )
 	write( buf );
 }
 
-// data()
+//char* data()
 /*****************************************************************
 * Purpose:
 *
@@ -47,7 +47,7 @@ char * message::data()
 	return _data;
 }
 
-// id()
+//char* id()
 /*****************************************************************
 * Purpose:
 *
@@ -61,7 +61,7 @@ char * message::id()
 	return _data + header_length;
 }
 
-// body()
+//char* body()
 /*****************************************************************
 * Purpose:
 *
@@ -75,7 +75,7 @@ char* message::body()
 	return _data + header_length + id_length;
 }
 
-// username()
+//char* username()
 /*****************************************************************
 * Purpose:
 *
@@ -89,7 +89,7 @@ char * message::username()
 	return _data + header_length + id_length + _body_length;
 }
 
-// total_length()
+//size_t total_length()
 /*****************************************************************
 * Purpose:
 *
@@ -101,9 +101,9 @@ char * message::username()
 size_t message::total_length() const
 {
 #ifdef CLIENT
-		return header_length + id_length + _body_length + username_length;
+	return header_length + id_length + _body_length + username_length;
 #elif SERVER
-		return header_length + id_length + _body_length;
+	return header_length + id_length + _body_length;
 #endif
 }
 
@@ -182,7 +182,7 @@ void message::encode_header()
 	_data[3] = ( _body_length >> 24 ) & 0xFF;
 	_data[2] = ( _body_length >> 16 ) & 0xFF;
 	_data[1] = ( _body_length >> 8 ) & 0xFF;
-	_data[0] = _body_length & 0xFF ;
+	_data[0] = _body_length & 0xFF;
 }
 
 // decode_id()
